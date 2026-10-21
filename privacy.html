@@ -28,101 +28,110 @@
   <p class="sub">Doltap · 돌탑 · Erek Studio</p>
 
   <div class="card">
-    <strong>Short version:</strong> Doltap has no accounts and we log nothing about
-    you. Your wish and your towers stay on your device. <strong>From version 1.3.0
-    there are no ads at all.</strong> In 1.3.0 and later, if you are signed in to
-    <strong>Game Center</strong> (iPhone, iPad) or <strong>Google Play Games</strong>
-    (Android), your tower heights go to the game's leaderboards there, handled by
-    Apple or Google. Versions before 1.3.0 show ads from Google AdMob — see
-    &ldquo;Earlier versions&rdquo; below.
+    <strong>Short version:</strong> Doltap has no ads, analytics, or tracking.
+    Your wish and journal stay on your device. From version 1.3.1, Doltap has
+    one shared weekly board. Nothing is sent to it until you choose to join.
+    Your runs appear under a five-digit stone number, not a name, and you can
+    leave and delete your board data from Settings.
   </div>
 
   <h2>What we collect</h2>
-  <p>We — Erek Studio — do not collect, store, or transmit any personal data.
-  There is no sign-up, no profile, and no account of ours. From version 1.3.0
-  Doltap contains no advertising, analytics, attribution, or crash-reporting SDK,
-  and it does not track you. (Earlier versions contain Google's advertising SDK;
-  see &ldquo;Earlier versions&rdquo;.)</p>
+  <p>If you choose to join the shared board, Erek Studio processes a
+  server-issued install ID, a five-digit stone number, and your verified best
+  tower heights. A finished run is sent as its stone order and tap timing so
+  our server can replay it. The replay input is processed in memory and is not
+  stored. The board does not receive your name, email, wish, journal, store
+  account, advertising identifier, or payment information.</p>
+  <p>Doltap contains no advertising, analytics, attribution, or
+  crash-reporting SDK. It does not track you or use board data for advertising
+  or analytics.</p>
 
   <h2>Data stored on your device</h2>
   <p>Doltap saves a few things locally so the app remembers your play:</p>
   <ul>
-    <li>Your one-word wish, your wish-cairn count, and your best tower height.</li>
-    <li>Your wish journal: the date, height and wish of your recent runs, and the
-    number of the stone sequence each was played with.</li>
-    <li>Your season, sound and haptics settings.</li>
+    <li>Your one-word wish, wish-cairn count, and best tower height.</li>
+    <li>Your wish journal: the date, height, wish, and stone-order number of
+    recent runs.</li>
+    <li>Your season, sound, haptics, board choice, and rating-prompt timing.</li>
     <li>Whether you have purchased the one-time unlock.</li>
+    <li>From version 1.3.1, how many of your free runs you have used, and whether
+      this device was already playing before 1.3.1. This count is never uploaded.</li>
+    <li>If you join the board, its install credential, stone number, confirmed
+    bests, and any run or deletion waiting for a connection.</li>
   </ul>
-  <p>This information never leaves your device and is removed if you delete the app.</p>
+  <p>This local information is removed if you delete the app. Your wish and
+  journal are never uploaded to the shared board.</p>
 
-  <h2>Leaderboards (version 1.3.0 and later)</h2>
-  <p>Doltap has weekly and all-time leaderboards on <strong>Apple Game Center</strong>
-  and <strong>Google Play Games</strong>. They are used only if you are signed in
-  to that service; Doltap never creates an account for you. When you are, the
-  height of each finished run is sent to Doltap's leaderboards under your
-  Game Center or Play Games player profile, and the app reads your weekly rank
-  on that leaderboard. The rank and the leaderboards are shown inside the app to
-  owners of the one-time unlock. Other players can see leaderboard entries
-  (player name and height). Apple and Google process this data under their own
-  privacy policies — <a href="https://www.apple.com/legal/privacy/">Apple</a>,
-  <a href="https://policies.google.com/privacy">Google</a> — and you can manage
-  your profile and its visibility in their settings. If you are not signed in,
-  nothing is sent.</p>
+  <h2>Shared board (version 1.3.1 and later)</h2>
+  <p>The board combines participating players on one weekly list. Joining is
+  optional. The first time you join, the server issues a random install ID,
+  secret, and five-digit stone number. The secret stays on your device; the
+  server stores only its SHA-256 hash. The ID links your weekly best and your
+  best height since the shared board began.</p>
+  <p>For each eligible finished run, Doltap sends the week's stone-order seed,
+  tap ticks, and claimed height. The server replays the run and ranks only the
+  height its own replay reaches. The seed and tap ticks are not stored on the
+  server. The daily sweep at 04:00 UTC keeps the current week and the previous
+  11 weeks (12 weekly boards), deleting older weekly rows. A used player record
+  and its all-time best are removed 400 days after the last accepted run; a registration
+  that never sends a run is removed after 30 days.</p>
+  <p>To limit abuse, the server uses a keyed hash of the request's network
+  address. The address itself is not stored and the hash changes daily. The
+  hourly sweep deletes rate-limit windows opened more than one hour ago, so
+  each rate-limit row is kept for at most two hours. If a replay disagrees with
+  the app, one diagnostic log line may contain only the app version and
+  platform, with no player ID or run input.</p>
+  <p>You can turn off “Add my towers to this week's board” in Settings. Doltap
+  then deletes your player and ranking rows. If you are offline, the deletion
+  remains on your device and is sent before any later board action.</p>
 
   <h2>Advertising</h2>
-  <p><strong>Version 1.3.0 and later: none.</strong> Doltap shows no ads and
-  contains no advertising SDK. It does not use the advertising identifier (the
-  Android build removes that permission) and does not ask to track you.</p>
+  <p><strong>Version 1.3.0 and later: none.</strong> Doltap shows no ads,
+  contains no advertising SDK, does not use an advertising identifier, and
+  does not ask to track you.</p>
 
-  <h2>Earlier versions (before 1.3.0)</h2>
-  <p>Until you update, an earlier version of Doltap shows a short ad between runs,
-  never during one, served by <strong>Google AdMob</strong>. To do that, Google
-  processes your advertising identifier, an approximate region derived from your
-  IP address, device and app information, and your interaction with the ad, under
+  <h2>Earlier versions</h2>
+  <p>Version 1.3.0 used Apple Game Center or Google Play Games for separate
+  platform leaderboards. Version 1.3.1 removes both integrations and replaces
+  them with the optional shared board described above.</p>
+  <p>Versions before 1.3.0 included Google AdMob. Until you update from one of
+  those versions, Google may process an advertising identifier, approximate
+  region, device and app information, and ad interactions under
   <a href="https://policies.google.com/technologies/partner-sites">Google's
-  privacy policy</a>. We only ever see aggregate revenue reporting — never
-  anything about an individual person. In the EEA, Switzerland, and the UK, a
-  Google consent form asks for your choice before the first ad loads; on iOS the
-  system additionally asks whether the app may track you. In those versions the
-  one-time unlock removes the ads. Updating to 1.3.0 removes the advertising and
-  its SDK for everyone.</p>
+  privacy policy</a>. Updating removes the advertising and its SDK.</p>
 
   <h2>Network &amp; third parties</h2>
-  <p>The game itself runs on your device: the physics, your wish, your towers and
-  your journal need no connection. From version 1.3.0, network requests come only
-  from the leaderboards above when you are signed in, from the Google Play Games
-  library that provides them on Android, and from the App Store or Google Play
-  when you buy or restore the unlock. Earlier versions also make the advertising
-  requests described above.</p>
+  <p>The physics, wish, tower, and journal work on your device. In version
+  1.3.1, Doltap contacts Erek Studio's board service only for the optional
+  board. The operating system's store service is contacted when you buy or
+  restore the unlock. There are no advertising, analytics, or social SDKs.</p>
 
   <h2>Sharing &amp; Photos</h2>
-  <p>If you choose to share a keepsake card of your best tower, or keep your tower
-  as a wallpaper, the image is created on your device and handed to your operating
-  system's standard share sheet. You pick where it goes; Doltap does not send it
-  anywhere on its own. On iPhone and iPad, choosing &ldquo;Save Image&rdquo; there
-  asks for permission to <strong>add</strong> photos — Doltap cannot see or read
-  your photo library.</p>
+  <p>If you choose to share a keepsake card or keep your tower as a wallpaper,
+  the image is created on your device and handed to the operating system's
+  standard share sheet. You choose where it goes; Doltap does not send it
+  anywhere on its own. Where “Save Image” is available, Doltap asks only for
+  permission to add the image and cannot read your photo library.</p>
 
   <h2>Purchases</h2>
-  <p>The optional one-time unlock is processed by the <strong>Apple App Store</strong>
-  or <strong>Google Play</strong>. Doltap never sees your name, email, or payment
-  details — those are handled entirely by Apple or Google under their own privacy
-  policies.</p>
+  <p>The optional one-time unlock is processed by your device's store service.
+  Doltap never sees your name, email, store credentials, or payment details.
+  It receives only the entitlement result needed to unlock the features.</p>
 
   <h2>Children</h2>
-  <p>Doltap is not directed at children. It collects no data of its own, and from
-  version 1.3.0 it shows no ads (earlier versions show ads, and an ad can lead to
-  an external site). Leaderboards are Apple's and Google's services, with their
-  own settings for who may use them.</p>
+  <p>Doltap is not directed at children. It has no ads or tracking. The optional
+  shared board uses only a stone number and verified gameplay data; it does not
+  collect a name or contact information.</p>
 
   <h2>Changes</h2>
-  <p>If this policy ever changes, the updated version will be posted on this page.
-  Version 1.3.0 removed all advertising and added the leaderboards.</p>
+  <p>If this policy changes, the updated version will be posted on this page.
+  Version 1.3.1 replaced the separate platform leaderboards with one optional
+  shared weekly board.</p>
 
   <h2>Contact</h2>
   <p>Questions? Email <a href="mailto:mustafasalimerek@gmail.com">mustafasalimerek@gmail.com</a>.</p>
 
-  <footer>Erek Studio · Doltap (돌탑) · Last updated 10 October 2026</footer>
+  <footer>Erek Studio · Doltap (돌탑) · Last updated 21 October 2026</footer>
 </main>
 </body>
 </html>
